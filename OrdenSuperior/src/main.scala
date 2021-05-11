@@ -2,9 +2,6 @@
 
 object main {
   
-
-object main {
-  
   
   
   def imprimir(a:Int,lista:List[Int]) {//a es un contador para saber en que posicion nos encontramos
@@ -28,17 +25,7 @@ object main {
 
 }
    
-   def leer(n:Int,lista:List[Int]): Int ={//n es la posicion a leer
-	if(lista==Nil){
-	-1;
-	}
-	else if(n==0){
-	lista.head;
-	}else{
-	leer(n-1,lista.tail);
-	}
-	
-} 
+
    
      def leerColumna(l: List[Int], i: Int, a: Int, long: Int, l2: List[Int]): List[Int] = {
 	  if(a < long)
@@ -77,24 +64,14 @@ object main {
   		List(-1)
   }
   
-  def length(lista:List[Int],longitud:Int): Int ={
-    
-	if(lista == Nil){
-	  
-		longitud;
-		
-	}else{
-	  
-		length(lista.tail,longitud+1);
-	}
-} 
+
   def todas(n:Int , fila:List[Int]): Int ={ //Devuelve 1 si todos los numeros de la fila son el mismo, sino devuelve 0
 	
   if(fila.tail == Nil){
     0   
-  }else if(n+1==length(fila,0)){
+  }else if(n+1==fila.length){
 		1 }
-	else if(leer(n,fila) != leer(n+1,fila)){
+	else if(fila(n) != fila(n+1)){
 		0 }
 	else{
 		todas(n+1,fila);
@@ -102,18 +79,10 @@ object main {
 
 }
   
-  def reverse(fila:List[Int]) : List[Int] = {
 
-	if(fila==Nil){
-		List();
-	}else{
-		reverse(fila.tail) ::: List(fila.head);
-	}
-
-} 
   
   def seguidos(long : Int,n:Int , fila:List[Int]): Int = {
-	val l = length(fila,0);  //Longitud de la lista
+	val l = fila.length;  //Longitud de la lista
 	if(n==long){            //Si es el final de la iteracion para
 		0;
 	}else{
@@ -123,9 +92,9 @@ object main {
 		 
 			l;
 		}else{
-		val aux = reverse(fila); //Le da la vuelta a la funcion
+		val aux = fila.reverse; //Le da la vuelta a la funcion
 		val aux2 = aux.tail; //Se queda con la cola
-			seguidos(long,n+1,reverse(aux2)); //recursiva dando la vuelta de nuevo
+			seguidos(long,n+1,aux2.reverse); //recursiva dando la vuelta de nuevo
 			
 			}
 	}
@@ -214,12 +183,12 @@ object main {
   		List();
   	}
   	else if(n==posicion){
-  			List(leer(movimiento,tablero)) ::: mover(n+1,posicion,movimiento,tablero);
+  			List(tablero(movimiento)) ::: mover(n+1,posicion,movimiento,tablero);
   		
   	}else if(n==movimiento){
-  			List( leer(posicion,tablero)) ::: mover(n+1,posicion,movimiento,tablero);
+  			List( tablero(posicion)) ::: mover(n+1,posicion,movimiento,tablero);
   	}else{
-  			List( leer(n,tablero)) ::: mover(n+1,posicion,movimiento,tablero); //Seguimos buscando la posicion a mover
+  			List( tablero(n)) ::: mover(n+1,posicion,movimiento,tablero); //Seguimos buscando la posicion a mover
   			
   				}
   } 
@@ -259,7 +228,7 @@ object main {
 	def fila0s(n:Int , fila:List[Int]): List[Int] ={
 	if(n==8){
 		List();
-	}else if( leer(n,fila) == leer(n+1,fila)){
+	}else if( fila(n) == fila(n+1)){
 		List(n) ::: fila0s(n+1,fila);
 	}else{
 		List(n) ::: fila0s(n+1,fila);
@@ -284,7 +253,7 @@ object main {
   	if(n==8){
   		List(fila.head);
   	}else{
-  		val seg = seguidos(length(fila,0),0,fila);
+  		val seg = seguidos(fila.length,0,fila);
  
   		if (seg >2) {
   			val filaux = quitarHead(seg,fila);
@@ -330,7 +299,7 @@ object main {
   
   
   def anadir(lst: List[Int]): List[Int] = {
-      val lt = length(lst,0)
+      val lt = lst.length
       anadirRec(lst,7 - lt)
   		
   }
@@ -434,7 +403,7 @@ object main {
 	if(n==6){
 		List(fila.head);
 	}else{
-		val seg = seguidos(length(fila,0),0,fila);
+		val seg = seguidos(fila.length,0,fila);
 		if (seg >2) {
 			val filaux = quitarHead(seg,fila);
 			if(n+seg>6){
@@ -557,9 +526,9 @@ object main {
       val nuevo = bucleTablero(tablero)
       
       val parametros = pedirUser()
-      val posicion =leer(0,parametros)*9 + leer(1,parametros)
-      val direccion = leer(2,parametros)
-      if(leer(3,parametros)==2){
+      val posicion =parametros(0)*9 + parametros(1)
+      val direccion = parametros(2)
+      if(parametros(3)==2){
  
         val nuevo2 = cambio(posicion,direccion,nuevo)
         imprimir(0,nuevo2)
@@ -615,4 +584,3 @@ def main(args:Array[String]) {
   }
 }
 
-}

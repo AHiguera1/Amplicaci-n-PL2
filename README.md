@@ -1,2 +1,0 @@
-# Amplicaci-n-PL2
-.

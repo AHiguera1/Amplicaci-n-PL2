@@ -132,8 +132,6 @@ class JuegoBasico {
         }
     }
 }
-  val sinceros = removeZeros(List(0,1,3,5,3,0,1), List())
-  removeZeros(List(7,7,7,7,7,7,7), List())
   
   def anadirRec(lst: List[Int], n: Int): List[Int] = {
           if(n <= 0) {

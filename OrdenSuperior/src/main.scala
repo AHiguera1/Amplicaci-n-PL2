@@ -24,7 +24,7 @@ object main {
 	}
 
 }
-   
+   //...
 
    
      def leerColumna(l: List[Int], i: Int, a: Int, long: Int, l2: List[Int]): List[Int] = {

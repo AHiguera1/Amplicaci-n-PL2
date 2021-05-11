@@ -65,19 +65,12 @@ object main {
   }
   
 
-  def todas(n:Int , fila:List[Int]): Int ={ //Devuelve 1 si todos los numeros de la fila son el mismo, sino devuelve 0
-	
-  if(fila.tail == Nil){
-    0   
-  }else if(n+1==fila.length){
-		1 }
-	else if(fila(n) != fila(n+1)){
-		0 }
-	else{
-		todas(n+1,fila);
-	}
 
-}
+
+def todas(x: Int, y : Int): Int = {
+     if(x == y) x
+     else 0
+     }
   
 
   
@@ -86,9 +79,9 @@ object main {
 	if(n==long){            //Si es el final de la iteracion para
 		0;
 	}else{
-		val same = todas(0,fila);  //Comprueba si toda la lista tiene el mismo numero
+		val same = fila.reduce(todas)  //Comprueba si toda la lista tiene el mismo numero
 		
-		if(same == 1){  //Si tiene el mismo numero devuelve la longitud de la lista
+		if(same != 0){  //Si tiene el mismo numero devuelve la longitud de la lista
 		 
 			l;
 		}else{
@@ -101,17 +94,10 @@ object main {
 }
   
   
-  def quitarHead(n:Int , fila:List[Int]) : List[Int] = {
-	if (n > 0){
-		quitarHead(n-1, fila.tail);
-	}else{
-	fila;
-	
-	}
-} 
+  
   
   def matrizFilas(l1: List[Int], l2: List[Int], l3: List[Int], l4: List[Int], l5: List[Int], l6: List[Int], l7: List[Int]): List[Int] = {
-	val matriz = List() ++ l1 ++ l2 ++ l3 ++ l4 ++ l5 ++ l6 ++ l7
+	val matriz = List(l1,l2,l3,l4,l5,l6,l7).par.reduce(_++_)
 	matriz
 }
   
@@ -119,14 +105,14 @@ object main {
   def matrizColumnas(c1: List[Int], c2: List[Int], c3: List[Int], c4: List[Int], c5: List[Int], c6: List[Int], c7: List[Int], c8: List[Int], c9: List[Int], matriz: List[Int]): List[Int] = {
 	if(c1.tail == Nil)
 	{
-		val matrizAux = matriz ++ List(c1.head) ++ List(c2.head) ++ List(c3.head) ++ List(c4.head) ++ List(c5.head) ++ List(c6.head) ++ List(c7.head) ++ List(c8.head) ++ List(c9.head)
+		val matrizAux = List(matriz,List(c1.head),List(c2.head),List(c3.head),List(c4.head),List(c5.head),List(c6.head),List(c7.head),List(c8.head),List(c9.head)).par.reduce(_++_)
 		matrizAux
 	}
 	else
 	{
-		val matrizAux = matriz ++ List(c1.head) ++ List(c2.head) ++ List(c3.head) ++ List(c4.head) ++ List(c5.head) ++ List(c6.head) ++ List(c7.head) ++ List(c8.head) ++ List(c9.head)
-		matrizColumnas(c1.tail, c2.tail, c3.tail, c4.tail, c5.tail, c6.tail, c7.tail, c8.tail, c9.tail, matrizAux)
-	}
+    val matrizAux = List(matriz,List(c1.head),List(c2.head),List(c3.head),List(c4.head),List(c5.head),List(c6.head),List(c7.head),List(c8.head),List(c9.head)).par.reduce(_++_)
+    matrizColumnas(c1.tail, c2.tail, c3.tail, c4.tail, c5.tail, c6.tail, c7.tail, c8.tail, c9.tail, matrizAux)
+  }
 }   
   
   def comparaMatrices(l1: List[Int], l2: List[Int], r: List[Int]): List[Int] = {
@@ -168,7 +154,7 @@ object main {
 			lista ::: generarTablero(n-1,lista) ::: aux ;
 		}
 	}                                         //> generarTablero: (n: Int, lista: List[Int])List[Int]
-	val tablero = generarTablero(7*9,List());
+	
 	
 	def mover(n :Int ,posicion: Int , movimiento: Int,tablero :List[Int]): List[Int] = {
   	if(posicion>7*9){
@@ -235,16 +221,7 @@ object main {
 		}
   }
 
-  def generar0s(n:Int,lista:List[Int] ): List[Int] = { //Lista de enteros de 1 a n
-
-		if(n==0){
-			lista;
-			}else{
-			lista ::: generar0s(n-1,lista) ::: List(0);
-			}
-		
-
-  }
+ 
   
   def filanueva(n:Int , fila:List[Int]) : List[Int] = {
 	
@@ -256,13 +233,13 @@ object main {
   		val seg = seguidos(fila.length,0,fila);
  
   		if (seg >2) {
-  			val filaux = quitarHead(seg,fila);
+  			val filaux = fila.drop(seg)
   			
   			if(n+seg>8){
   			  
-			    generar0s(seg,List());  
+			    List.range(0,seg).map{case _ => 0} 
 			}else{
-			    generar0s(seg,List()) ::: filanueva(n+seg,filaux);  
+			    List.range(0,seg).map{case _ => 0} ::: filanueva(n+seg,filaux);  
 			}
   		}else{
   			List(fila.head) ::: filanueva(n+1,fila.tail);
@@ -272,37 +249,9 @@ object main {
   	
   }
   
-  def removeZeros(lst: List[Int],acc: List[Int]): List[Int] = {
-
-    if(lst == List())
-    {
-        acc
-    }else{
-        if(lst.head == 0){
-            removeZeros(lst.tail,acc)
-        }else{
-            removeZeros(lst.tail,acc ::: List(lst.head))
-        }
-    }
-}
-
-  
-  def anadirRec(lst: List[Int], n: Int): List[Int] = {
-          if(n <= 0) {
-              lst
-          }else{
-          val r = scala.util.Random;
-          val color = 1 + r.nextInt(6);
-          anadirRec(List(color) ::: lst, n - 1)
-  			}
-      }
   
   
-  def anadir(lst: List[Int]): List[Int] = {
-      val lt = lst.length
-      anadirRec(lst,7 - lt)
-  		
-  }
+ 
   def pedirX(n: Int): Int = {
        if(n == 0){
          println("\n\tFila (1 - 7): ")
@@ -405,11 +354,11 @@ object main {
 	}else{
 		val seg = seguidos(fila.length,0,fila);
 		if (seg >2) {
-			val filaux = quitarHead(seg,fila);
+			val filaux = fila.drop(seg)
 			if(n+seg>6){
-			     generar0s(seg,List());  
+			     List.range(0,seg).map{case _ => 0}
 			}else{
-			    generar0s(seg,List()) ::: colnueva(n+seg,filaux);  
+			    List.range(0,seg).map{case _ => 0} ::: colnueva(n+seg,filaux);  
 			}
 			
 		}else{
@@ -431,34 +380,34 @@ object main {
   	val c8 = leerColumna(lst,0,7,9,List())
   	val c9 = leerColumna(lst,0,8,9,List())
   
-  	val aux1 = removeZeros(c1, List())
-  	val f1 = anadir(aux1)
   	
-  	val aux2 = removeZeros(c2, List())
-  	val f2 = anadir(aux2)
+  	val aux1 = c1.filter(_ != 0)
+  	val f1 =  List.range(0,7 - aux1.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux1
+  	
+  	val aux2 = c2.filter(_ != 0)
+  	val f2 =  List.range(0,7 - aux2.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux2
   
-  	val aux3 = removeZeros(c3, List())
-  	val f3 = anadir(aux3)
+  	val aux3 = c3.filter(_ != 0)
+  	val f3 =  List.range(0,7 - aux3.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux3 
   
-  	val aux4 = removeZeros(c4, List())
-  	val f4 = anadir(aux4)
+  	val aux4 = c4.filter(_ != 0)
+  	val f4 =  List.range(0,7 - aux4.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux4
   
-  	val aux5 = removeZeros(c5, List())
-  	val f5 = anadir(aux5)
+  	val aux5 = c5.filter(_ != 0)
+  	val f5 =  List.range(0,7 - aux5.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux5
   
-  	val aux6 = removeZeros(c6, List())
-  	val f6 = anadir(aux6)
+  	val aux6 = c6.filter(_ != 0)
+  	val f6 =  List.range(0,7 - aux6.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux6
   
-  	val aux7 = removeZeros(c7, List())
-  	val f7 = anadir(aux7)
+  	val aux7 = c7.filter(_ != 0)
+  	val f7 =  List.range(0,7 - aux7.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux7
   
-  	val aux8 = removeZeros(c8, List())
-  	val f8 = anadir(aux8)
+  	val aux8 = c8.filter(_ != 0)
+  	val f8 =  List.range(0,7 - aux8.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux8
   
  
-  	val aux9 = removeZeros(c9, List())
-
-  	val f9 = anadir(aux9)
+    val aux9 = c9.filter(_ != 0)
+  	val f9 =  List.range(0,7 - aux9.length).map{case _ => 1 + scala.util.Random.nextInt(6)} ++ aux9
 
   
   	val lf = matrizColumnas(f1,f2,f3,f4,f5,f6,f7,f8,f9,List())
@@ -581,6 +530,9 @@ def main(args:Array[String]) {
     
     println("Fin ejecucion")
     
+    
+    
+   
   }
 }
 

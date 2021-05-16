@@ -516,47 +516,7 @@ def todas(x: Int, y : Int): Int = {
   }
   
   
-  
-  def contar0s(movimiento:Int ,posicion:Int , tablero: List[Int]): Int = {
-    
-    val tableroaux = cambio(posicion,movimiento,tablero)
-    if(tableroaux == List()) 0
-    else{
-    val aux2 = eliminarTres(tableroaux)
-    aux2.count(_==0)
-    }
-    
-  }
-  
-  
-  def posicion0s(posicion:Int, tablero:List[Int]): (Int,Int,Int) = {
-    
-    val arriba = contar0s(1,posicion,tablero)
-    
-    val abajo = contar0s(3,posicion,tablero)
-    
-    val derecha = contar0s(4,posicion,tablero)
-    
-    val izquierda = contar0s(2,posicion,tablero)
-    
-    val movimientos = List(arriba,abajo,derecha,izquierda)
-    
-    val maximo = movimientos.max
-    
-    val res =  maximo match {
-      
-      case arriba => (posicion,1,maximo)
-      case abajo =>   (posicion,3,maximo)
-      case derecha =>   (posicion,4,maximo)
-      case izquierda =>   (posicion,2,maximo) 
-    }
-    
-    
-   
-      res    
-    
-  
-  }
+ 
    
 def main(args:Array[String]) { 
     
@@ -565,12 +525,11 @@ def main(args:Array[String]) {
     
     //Generamos el tablero
     val tablero = generarTablero(7*9, List()); 
-    imprimir(0,tablero)
-    println(posicion0s(2,tablero))
+
     
     //bucle
     
-    //turno(2,tablero)
+    turno(2,tablero)
     
       
   

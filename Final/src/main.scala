@@ -467,39 +467,48 @@ def todas(x: Int, y : Int): Int = {
 	} 
   
   def turno(control : Int, tablero:List[Int]): List[Int] ={
-    
-    println("Tablero")
-    imprimir(0,tablero)
-    
-    if(control==2){
-      val nuevo = bucleTablero(tablero)
-      
-      val parametros = pedirUser()
-      val posicion =parametros(0)*9 + parametros(1)
-      val direccion = parametros(2)
-      if(parametros(3)==2){
- 
-        val nuevo2 = cambio(posicion,direccion,nuevo)
-        imprimir(0,nuevo2)
-        if(nuevo2 == Nil){
-          println("movimiento no valido")
-          turno(2,nuevo)
+   
+    if(control == 1000) tablero
+    else if(control % 25 == 0){
+      val a = seguir(0)
+      if(a == 2){
+        print("Tablero -- Turno: ")
+        println(control)
+        imprimir(0,tablero)
+        val nuevo = bucleTablero(tablero)
+        val aux = bestMove(0,(0,0,0),tablero)
+        print("Movimiento: ")
+        println(aux)
+        if(aux._3 == 0){
+          println("No hay mas movimientos posibles")
+          tablero
         }else{
-          turno(2,nuevo2)
-        }
-        
-      }else{
-        turno(1,nuevo)
-      }
-      
-    }else if (control ==1 ){
-      tablero
+          val nuevo2 = cambio(aux._1,aux._2,nuevo)
+          turno(control + 1,nuevo2)
+        }    
+ 
+      }else{tablero}
     }else{
-      tablero
+      print("Tablero -- Turno: ")
+      println(control)
+      imprimir(0,tablero)
+      val nuevo = bucleTablero(tablero)
+      val aux = bestMove(0,(0,0,0),tablero)
+      print("Movimiento: ")
+      println(aux)
+      if(aux._3 == 0){
+        println("No hay mas movimientos posibles")
+        tablero
+      }else{
+        val nuevo2 = cambio(aux._1,aux._2,nuevo)
+        turno(control + 1,nuevo2)
+      }    
+ 
     }
+     
   }
   
-  def bucleTablero(tablero:List[Int]): List[Int] ={
+  def bucleTablero(tablero:List[Int]): List[Int] = {
     //eliminar 3 
     
     val nuevo = eliminarTres(tablero);
@@ -533,23 +542,27 @@ def todas(x: Int, y : Int): Int = {
     
     val arriba = contar0s(1,posicion,tablero)
     
-    println(arriba)
     
     val abajo = contar0s(3,posicion,tablero)
     
-    println(abajo)
+    
     
     val derecha = contar0s(4,posicion,tablero)
     
-    println(derecha)
+    
     
     val izquierda = contar0s(2,posicion,tablero)
     
-    println(izquierda)
+    
     
     val movimientos = List(arriba,abajo,derecha,izquierda)
     
     val maximo = movimientos.max
+    /*
+    print("Arriba Abajo Derecha Izquierda -- posicion: ")
+    println(posicion)
+    println(movimientos)
+    * */
     
 
     
@@ -569,7 +582,7 @@ def todas(x: Int, y : Int): Int = {
 
     
 def bestMove(n:Int, t: (Int,Int,Int),tablero:List[Int]): (Int,Int,Int) = {
-    if(n == 81) t
+    if(n == 63) t
     else{
       val aux = posicion0s(n,tablero)
       if(aux._3 > t._3) bestMove(n + 1, aux, tablero)
@@ -583,18 +596,11 @@ def main(args:Array[String]) {
     
     
     //Generamos el tablero
-    val tablero = generarTablero(7*9, List()); 
     
-    
-    imprimir(0,tablero)
-    
-    
-    println(posicion0s(2,tablero))
-    println(bestMove(0,(0,0,0),tablero))
     
     //bucle
-    
-    //turno(2,tablero)
+    val tablero = generarTablero(7*9, List()); 
+    turno(0,tablero)
     
       
   

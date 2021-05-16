@@ -514,7 +514,44 @@ def todas(x: Int, y : Int): Int = {
     }
     //rellenar 
   }
+  
+  
+  
+  def contar0s(movimiento:Int ,posicion:Int , tablero: List[Int]): Int = {
     
+    val tableroaux = cambio(posicion,movimiento,tablero)
+    tableroaux.count(_==0)
+    
+  }
+  
+  
+  def posicion0s(posicion:Int, tablero:List[Int]): (Int,Int,Int) = {
+    
+    val arriba = contar0s(1,posicion,tablero)
+    
+    val abajo = contar0s(3,posicion,tablero)
+    
+    val derecha = contar0s(4,posicion,tablero)
+    
+    val izquierda = contar0s(2,posicion,tablero)
+    
+    val movimientos = List(arriba,abajo,derecha,izquierda)
+    
+    val maximo = movimientos.max
+    
+    val res =  maximo match {
+      
+      case arriba => (posicion,1,maximo)
+      case abajo =>   (posicion,3,maximo)
+      case derecha =>   (posicion,4,maximo)
+      case izquierda =>   (posicion,2,maximo)
+    }
+    
+   
+    
+    
+  
+  }
    
 def main(args:Array[String]) { 
     

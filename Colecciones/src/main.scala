@@ -86,7 +86,7 @@ def todas(x: Int, y : Int): Int = {
 		}else{
 		val aux = fila.reverse; //Le da la vuelta a la funcion
 		val aux2 = aux.tail; //Se queda con la cola
-			seguidos(long,n+1,aux2.reverse); //recursiva dando la vuelta de nuevo
+		seguidos(long,n+1,aux2.reverse); //recursiva dando la vuelta de nuevo
 			
 			}
 	}

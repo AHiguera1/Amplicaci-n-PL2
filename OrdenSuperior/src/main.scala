@@ -27,26 +27,26 @@ object main {
    //...
 
    
-     def leerColumna(l: List[Int], i: Int, a: Int, long: Int, l2: List[Int]): List[Int] = {
-	  if(a < long)
-	  		if(l.tail == Nil)
-	  		{
-	  		  if((i%long) == a){
-	  		    val lAux = l2 ::: List(l.head)
-	  			  lAux
-	  		  }else{
-	  		    val lAux = l2 
-	  			  lAux
-	  		  }
-	  			
-	  		}
-	  		else
-	  			if((i%long) == a)
-	  				leerColumna(l.tail, (i+1), a, long, l2 ++ List(l.head))
-	  			else
-	  				leerColumna(l.tail, (i+1), a, long, l2)
-	  	else
-	  		List(-1)
+ def leerColumna(l: List[Int], i: Int, a: Int, long: Int, l2: List[Int]): List[Int] = {
+      if(a < long)
+              if(l.tail == Nil)
+              {
+                if((i%long) == a){
+                  val lAux = l2 ::: List(l.head)
+                    lAux
+                }else{
+                  val lAux = l2 
+                    lAux
+                }
+
+              }
+              else
+                  if((i%long) == a)
+                      leerColumna(l.tail, (i+1), a, long, l2 ++ List(l.head))
+                  else
+                      leerColumna(l.tail, (i+1), a, long, l2)
+          else
+              List(-1)
   }
      
      
@@ -520,7 +520,11 @@ def todas(x: Int, y : Int): Int = {
   def contar0s(movimiento:Int ,posicion:Int , tablero: List[Int]): Int = {
     
     val tableroaux = cambio(posicion,movimiento,tablero)
-    tableroaux.count(_==0)
+    if(tableroaux == List()) 0
+    else{
+    val aux2 = eliminarTres(tableroaux)
+    aux2.count(_==0)
+    }
     
   }
   
@@ -544,11 +548,12 @@ def todas(x: Int, y : Int): Int = {
       case arriba => (posicion,1,maximo)
       case abajo =>   (posicion,3,maximo)
       case derecha =>   (posicion,4,maximo)
-      case izquierda =>   (posicion,2,maximo)
+      case izquierda =>   (posicion,2,maximo) 
     }
     
-   
     
+   
+      res    
     
   
   }
@@ -559,12 +564,17 @@ def main(args:Array[String]) {
     
     
     //Generamos el tablero
-    val tablero = generarTablero(7*9, List());   
-   
+    val tablero = generarTablero(7*9, List()); 
+    imprimir(0,tablero)
+    println(posicion0s(2,tablero))
+    
     //bucle
     
-    turno(2,tablero)
+    //turno(2,tablero)
     
+      
+  
+  
     println("Fin ejecucion")
     
     

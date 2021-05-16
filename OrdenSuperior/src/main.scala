@@ -81,7 +81,7 @@ def todas(x: Int, y : Int): Int = {
 	}else{
 		val same = fila.reduce(todas)  //Comprueba si toda la lista tiene el mismo numero
 		
-		if(same != 0){  //Si tiene el mismo numero devuelve la longitud de la lista
+		if(same != 0){  
 		 
 			l;
 		}else{

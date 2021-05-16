@@ -554,6 +554,16 @@ def todas(x: Int, y : Int): Int = {
     
   
   }
+
+    
+def bestMove(n:Int, t: (Int,Int,Int),tablero:List[Int]): (Int,Int,Int) = {
+    if(n == 81) t
+    else{
+      val aux = posicion0s(n,tablero)
+      if(aux._3 > t._3) bestMove(n + 1, aux, tablero)
+      else bestMove(n + 1, t, tablero)
+    }
+} 
    
 def main(args:Array[String]) { 
     
@@ -564,6 +574,7 @@ def main(args:Array[String]) {
     val tablero = generarTablero(7*9, List()); 
     imprimir(0,tablero)
     println(posicion0s(2,tablero))
+    println(bestMove(0,(0,0,0),tablero))
     
     //bucle
     
